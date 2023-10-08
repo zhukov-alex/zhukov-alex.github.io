@@ -7,7 +7,7 @@
 </head>
 <body class="antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900">
 <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
-    <div class="ml-auto lg:flex lg:items-center"><a href="/en/index.html" class="underline text-slate-900">English version</a></div>
+    <div class="ml-auto lg:flex lg:items-center"><a href="/" class="underline text-slate-900">Русская версия</a></div>
     <div class="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
         <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30" style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
     </div>
@@ -15,7 +15,7 @@
         <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30" style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
     </div>
     <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <a href="/" class="flex-none rounded-full bg-gray-700 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">На главную <span aria-hidden="true">&rarr;</span></a>
+        <a href="/en" class="flex-none rounded-full bg-gray-700 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">Main page <span aria-hidden="true">&rarr;</span></a>
     </div>
 </div>
 <div class="relative isolate overflow-hidden bg-white px-6 py-12 sm:py-12 lg:overflow-visible lg:px-0 mb-12">
@@ -101,77 +101,77 @@ function DefaultSentryContainer(props: { children: Node, ... }): Node {
             <div class="lg:pr-4">
                 <div class="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
                     <p class="mt-6">
-                        В процессе доработки платформы на базе React был проведен рефакторинг:
+                        The following refactoring steps were performed:
                     </p>
                     <ul role="list" class="mt-5  text-sm leading-7 text-gray-600 ">
                         <li class="flex gap-x-3">
                             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                             </svg>
-                            переход на монорепозиторий Lerna
+                            Transition to a Lerna monorepository.
                         </li>
                         <li class="flex gap-x-3">
                             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                             </svg>
-                            fine-tuning Webpack (оптимизация, минимизация, код-сплиттинг и т.д)
+                            Fine-tuning of Webpack (optimization, minimization, code splitting, etc.).
                         </li>
                         <li class="flex gap-x-3">
                             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                             </svg>
-                            внедрение в проект поддержки TypeScript
+                            Introduction of TypeScript support into the project.
                         </li>
                         <li class="flex gap-x-3">
                             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                             </svg>
-                            миграция с классов на функциональные компоненты с использованием хуков.
+                            Migration from classes to functional components and hooks.
                         </li>
                     </ul>
 
                     <p class="mt-5">
-                        Реализован новый функционал:
+                        New functionality was implemented, including:
                     </p>
                     <ul role="list" class="mt-5  text-sm leading-7 text-gray-600 ">
                         <li class="flex gap-x-3">
                             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                             </svg>
-                            механизм потокового взаимодействия с API сервера на базе gRPC шлюза
+                            A mechanism for streaming interaction with the API server using a gRPC gateway.
                         </li>
                         <li class="flex gap-x-3">
                             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                             </svg>
-                            логика оптимистичных обновлений и локального кэширования
+                            Logic for optimistic updates and local caching.
                         </li>
                         <li class="flex gap-x-3">
                             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                             </svg>
-                            сервис хранения в IndexedDB c возможностью шифрования данных
+                            A storage service in IndexedDB with data encryption capabilities.
                         </li>
                         <li class="flex gap-x-3">
                             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                             </svg>
-                            аутентификация на стороне клиента, произведена интеграция с серверной частью
+                            Client-side authentication, integrated with the server-side.
                         </li>
                         <li class="flex gap-x-3">
                             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                             </svg>
-                            интеграция с сервисом мониторинга Sentry.
+                            Integration with the Sentry monitoring service.
                         </li>
                     </ul>
                     <div class="mt-5 items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
-                        <img class="h-32 w-32 rounded-full ml-3" src="img/photo.jpeg" alt="" />
+                        <img class="h-32 w-32 rounded-full ml-3" src="/img/photo.jpeg" alt="" />
                         <div class="p-6">
                             <h3 class="text-xl font-medium tracking-tight text-gray-900 dark:text-white">
-                                <a href="#">Александр Жуков</a>
+                                <a href="#">Alex Zhukov</a>
                             </h3>
-                            <p class="mt-2 mb-2 mb-4 font-light text-gray-500 dark:text-gray-400">Если перед вами стоят похожие задачи буду рад поделиться экспертизой.</p>
+                            <p class="mt-2 mb-2 mb-4 font-light text-gray-500 dark:text-gray-400">If you are facing similar challanges, I'll be glad to share my expertise.</p>
                             <ul class="flex space-x-4 sm:mt-0">
                                 <li>
                                     <a href="https://www.linkedin.com/in/alexzhkv" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
@@ -214,20 +214,20 @@ function DefaultSentryContainer(props: { children: Node, ... }): Node {
                         </div>
                     </div>
 
-                    <h2 class="mt-10 text-lg font-medium tracking-tight text-gray-900">Взаимодействие с API сервера</h2>
-                    <p class="mt-3">Реализован механизм взаимодействия с общим (для всех клиентов) API сервера. Соединение осуществляется через gRPC шлюз с поддержкой Unary и Stream (в т.ч. Bidirectional) вызовов. Внедрена кодогенерация API из общих proto файлов. Добавлены клиенты с шедулингом и экспоненциальными повторами. Механизмы двухсторонней синхронизации данных с сервером.</p>
+                    <h2 class="mt-10 text-lg font-medium tracking-tight text-gray-900">Interaction with the API Server</h2>
+                    <p class="mt-3">A logic for interacting with the API server. Connection is established through a gRPC gateway with support for Unary and Stream (including Bidirectional) calls. Code generation of the API from shared proto files was introduced. Clients with scheduling and exponential retries were added. Two-way data synchronization mechanisms with the server were implemented.</p>
 
-                    <h2 class="mt-10 text-lg font-medium tracking-tight text-gray-900">Аутентификация</h2>
-                    <p class="mt-3">Произведена интеграция с <a href="auth.html">сервисом авторизации</a>, реализована поддержка аутентификации OAuth2.0, по логину/паролю, по QR-коду, по сертификату.</p>
+                    <h2 class="mt-10 text-lg font-medium tracking-tight text-gray-900">Authentication</h2>
+                    <p class="mt-3">An integration with the authentication service was performed, supporting OAuth 2.0, username/password, QR code, and certificate-based authentication.</p>
 
-                    <h2 class="mt-10 text-lg font-medium tracking-tight text-gray-900">Sentry, логирование, debug</h2>
-                    <p class="mt-3">Добавлена интеграция с Sentry, улучшено логирование, добавлен Performance API, запросы к IndexedDB профилируются.</p>
+                    <h2 class="mt-10 text-lg font-medium tracking-tight text-gray-900">Sentry, Logging, Debugging</h2>
+                    <p class="mt-3">An integration with Sentry was added, logging was improved, the Performance API was introduced, and IndexedDB queries are profiled.</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="bundle.js"></script>
+<script src="/bundle.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
 <script>hljs.highlightAll();</script>

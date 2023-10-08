@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Gateway</title>
+    <title>A2P Message Delivery Platform</title>
 </head>
 <body class="antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900">
 <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
-    <div class="ml-auto lg:flex lg:items-center"><a href="/en/index.html" class="underline text-slate-900">English version</a></div>
+    <div class="ml-auto lg:flex lg:items-center"><a href="/" class="underline text-slate-900">Русская версия</a></div>
     <div class="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
         <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30" style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
     </div>
@@ -15,7 +15,7 @@
         <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30" style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
     </div>
     <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <a href="/" class="flex-none rounded-full bg-gray-700 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">На главную <span aria-hidden="true">&rarr;</span></a>
+        <a href="/en" class="flex-none rounded-full bg-gray-700 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">Main page <span aria-hidden="true">&rarr;</span></a>
     </div>
 </div>
 <div class="relative isolate overflow-hidden bg-white px-6 py-12 sm:py-12 lg:overflow-visible lg:px-0 mb-12">
@@ -36,91 +36,17 @@
         <div class="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             <div class="lg:pr-4">
                 <div class="lg:max-w-lg">
-                    <p class="text-base font-semibold leading-7 text-indigo-600">Golang, gRPC, Redis, Kafka</p>
-                    <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">API Gateway</h1>
-                    <p class="mt-5 text-base leading-7 text-gray-700">Реализована шлюз-система (авторизующий маршрутизатор), сервис интегрирован в <a href="ci-cd.html" class="text-blue-600 u-underline">IaC CI/CD платформу</a>, собираются подробные метрики, логи, трэйсинг, аудит.</p>
-                    <img src="img/gateway.png" class="mt-6" alt="" />
-                </div>
-            </div>
-        </div>
-        <div class="lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 max-w-2xl">
-<pre><code class="language-go text-xs leading-5">
-func (a *ActiveUsersObservable) Scheduler() {
-  a.db.WithAuthStream(context.Background(), func(ch chan p.AuthStreamPair) {
-    l := a.logger.With(zap.String("process", "scheduler"))
-    l.Info("started loop")
-    defer l.Info("stop")
-
-    go a.mapLoop()
-
-    ticker := time.NewTicker(a.updatePeriod)
-    defer ticker.Stop()
-    for {
-      select {
-      case <-a.ctx.Done():
-        close(a.cmds)
-        return
-      case <-ticker.C:
-        a.squash()
-      case pair := <-ch:
-        a.add(pair.TokenHash, pair.AuthID)
-      }
-    }
-  })
-}
-</code></pre>
-
-<pre class="mt-5"><code class="language-go text-xs leading-5">
-func (a *ActiveUsersObservable) mapLoop() {
-  for cmd := range a.cmds {
-    switch cmd.GetCommandType() {
-    case addCommandType:
-      if cmd.(*addCommand).Token != "" {
-        a.activeTokens[cmd.(*addCommand).Token] = struct{}{}
-      } else {
-        a.activeAuthIDs[cmd.(*addCommand).AuthId] = struct{}{}
-      }
-      buffSize := uint(len(a.activeAuthIDs) + len(a.activeTokens))
-      if buffSize >= a.lastActiveBufferSize {
-        go a.squash()
-      }
-
-    case getKeysCommandType:
-      authIDs := make([]int64, 0, len(a.activeAuthIDs))
-      tokens := make([]string, 0, len(a.activeTokens))
-
-      for id := range a.activeAuthIDs {
-        authIDs = append(authIDs, id)
-      }
-      for token := range a.activeTokens {
-        tokens = append(tokens, token)
-      }
-      for k := range a.activeTokens {
-        delete(a.activeTokens, k)
-      }
-      for k := range a.activeAuthIDs {
-        delete(a.activeAuthIDs, k)
-      }
-      cmd.(*getKeysCommand).resp <- keys{
-        authIDs: authIDs,
-        tokens:  tokens,
-      }
-    }
-  }
-}
-</code></pre>
-        </div>
-        <div class="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-            <div class="lg:pr-4">
-                <div class="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
-                    <p class="mt-5">Сервис написан на Golang и оптимизирован для высокой производительности с учетом особенностей работы языка и планировщика. Для взаимодействия между микросервисами используется протокол gRPC. Синхронизация обновлений сессий происходит с использованием брокера Kafka. Для хранения информации используются Postgres, Redis.</p>
+                    <p class="text-base font-semibold leading-7 text-indigo-600">Golang, gRPC, Push, SMS, Voice, Telegram, WhatsApp</p>
+                    <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">A2P Message Delivery Platform</h1>
+                    <p class="mt-5 text-base leading-7 text-gray-700">To address the task of delivering authentication and service messages, was developed own delivery management services. It supports delivery through various channels, including push notifications, voice calls (messages and codes), SMS, Flash Call, Telegram, and WhatsApp. The majority of integrations are implemented directly to the service providers.</p>
+                    <p class="mt-5 text-base leading-7 text-gray-700">Key requirements included: hosting the services on-premises (on the customer's infrastructure), ensuring high throughput for the push notification delivery service, and support for cascading delivery.</p>
                     <div class="mt-5 items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
-                        <img class="h-32 w-32 rounded-full ml-3" src="img/photo.jpeg" alt="API gateway" />
+                        <img class="h-32 w-32 rounded-full ml-3" src="/img/photo.jpeg" alt="" />
                         <div class="p-6">
                             <h3 class="text-xl font-medium tracking-tight text-gray-900 dark:text-white">
-                                <a href="#">Александр Жуков</a>
+                                <a href="#">Alex Zhukov</a>
                             </h3>
-                            <p class="mt-2 mb-2 mb-4 font-light text-gray-500 dark:text-gray-400">Если перед вами стоят похожие задачи буду рад поделиться экспертизой.</p>
+                            <p class="mt-2 mb-2 mb-4 font-light text-gray-500 dark:text-gray-400">If you are facing similar challanges, I'll be glad to share my expertise.</p>
                             <ul class="flex space-x-4 sm:mt-0">
                                 <li>
                                     <a href="https://www.linkedin.com/in/alexzhkv" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
@@ -162,18 +88,27 @@ func (a *ActiveUsersObservable) mapLoop() {
                             </ul>
                         </div>
                     </div>
-
-                    <h2 class="mt-10 text-lg font-medium tracking-tight text-gray-900">Детали реализации</h2>
-                    <p class="mt-3">Авторизующий маршрутизатор обеспечивает интеграцию между клиентами и сервисами, обрабатывая процесс аутентификации и авторизации. Он принимает запросы от пользователей и добавляет идентификаторы пользователей в заголовки запросов. Затем маршрутизатор использует таблицу маршрутизации, чтобы отправить запросы в соответствующие сервисы, с учетом настроенных прав доступа и разрешений для каждого пользователя.</p>
-                    <p class="mt-6">В роутере присутствует rate limiter с гибкой настройкой правил с учетом сессии, платформы, групп эндпойнтов. А также другие чекеры (checkers), например, проверка версий приложения с учетом типа клиента.</p>
+                </div>
+            </div>
+        </div>
+        <div class="lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 max-w-2xl">
+<pre><code class="language-go text-xs">
+</code></pre>
+        </div>
+        <div class="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+            <div class="lg:pr-4">
+                <div class="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
+                    <h2 class="mt-10 text-lg font-medium tracking-tight text-gray-900">Implementation Details</h2>
+                    <p class="mt-5">The services was implemented in Golang, with Kafka and gRPC used as transport. Custom worker settings, limits, and retry logic was configured for each delivery channel.</p>
+                    <p class="mt-6">The services was integrated into own <a href="/en/ci-cd.html">IaC CI/CD platform</a>. Detailed metrics for the services themselves, devices, delivery time to the provider are collected on an ongoing basis..</p>
+                    <p class="mt-6">Was implemented logic for cascading message delivery using multiple channels. Handling of failed delivery statuses is included, and external services are integrated to keep phone numbers database up-to-date.</p>
+                    <p class="mt-6">The Push Notification delivery service is integrated with APNS, FCM, and Huawei. It handles the entire process of encoding messages, sending pushes, and processing service responses. The service has high throughput and can be used as a component in real-time messaging platforms.</p>
+                    <p class="mt-6">The SMS and voice call delivery services can be integrated with own VoIP infrastructure, communication PaaS, IP telephony services, or mobile network operators. Voice messages being generated with own text-to-speech service.</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="bundle.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
+<script src="/bundle.js"></script>
 </body>
 </html>
